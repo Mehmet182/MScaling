@@ -1,7 +1,41 @@
 from pydantic import Field, validator
 from typing import List, Optional, Union, Literal
-from sdks.novavision.src.base.model import Package, Image, Inputs, Configs, Outputs, Response, Request, Output, Input, \
-    Config
+from sdks.novavision.src.base.model import Package, Image, Inputs, Configs, Outputs, Response, Request, Output, Input, Config
+
+
+class InputImage(Input):
+    name: Literal["inputImage"] = "inputImage"
+    value: Union[List[Image], Image]
+    type: str = "object"
+
+    @validator("type", pre=True, always=True)
+    def set_type_based_on_value(cls, value, values):
+        value = values.get('value')
+        if isinstance(value, Image):
+            return "object"
+        elif isinstance(value, list):
+            return "list"
+
+    class Config:
+        title = "Image"
+
+
+class OutputImage(Output):
+    name: Literal["outputImage"] = "outputImage"
+    value: Union[List[Image],Image]
+    type: str = "object"
+
+    @validator("type", pre=True, always=True)
+    def set_type_based_on_value(cls, value, values):
+        value = values.get('value')
+        if isinstance(value, Image):
+            return "object"
+        elif isinstance(value, list):
+            return "list"
+
+    class Config:
+        title = "Image"
+
 
 
 class KeepSideFalse(Config):
@@ -37,18 +71,23 @@ class KeepSideBBox(Config):
         title = "Keep Sides"
 
 
+
+
+
 class Degree(Config):
     """
         Positive angles specify counterclockwise rotation while negative angles indicate clockwise rotation.
     """
     name: Literal["Degree"] = "Degree"
-    value: int = Field(ge=-359.0, le=359.0, default=0)
+    value: int = Field(ge=-359.0, le=359.0,default=0)
     type: Literal["number"] = "number"
     field: Literal["textInput"] = "textInput"
     placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
 
     class Config:
         title = "Angle"
+
+
 
 
 class MScaleExecutorInputs(Inputs):
@@ -61,7 +100,7 @@ class MScaleExecutorConfigs(Configs):
 
 
 class MScaleExecutorRequest(Request):
-    inputs: Optional[MScaleExecutorInputs]  # opsiyonel
+    inputs: Optional[MScaleExecutorInputs]
     configs: MScaleExecutorConfigs
 
     class Config:
@@ -69,15 +108,12 @@ class MScaleExecutorRequest(Request):
             "target": "configs"
         }
 
-
 class MScaleExecutorOutputs(Outputs):
     outputImage: OutputImage
 
 
-
 class MScaleExecutorResponse(Response):
-    outputs: MScaleExecuterOutputs
-
+    outputs: MScaleExecutorOutputs
 
 class MScaleExecutor(Config):
     name: Literal["MScaleExecutor"] = "MScaleExecutor"
@@ -103,18 +139,16 @@ class ConfigExecutor(Config):
     class Config:
         title = "Task"
         json_schema_extra = {
-            "target": "value"  # tek executor varsa
+            "target": "value"
         }
-
 
 class PackageConfigs(Configs):
     executor: ConfigExecutor
 
-
 class PackageModel(Package):
     configs: PackageConfigs
     type: Literal["component"] = "component"
-    name: Literal["M2Scaling"] = "Package"
+    name: Literal["MScaling"] = "MScaling"
 
 
 
