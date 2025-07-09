@@ -160,7 +160,7 @@ class KSize(Config):
     field: Literal["dropdownlist"] = "dropdownlist"
 
     class Config:
-        title = "Keep Sides"
+        title = "KSize"
 
 
 class SigmaX(Config):
@@ -184,17 +184,26 @@ class MinRadius1(Config) :
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
+    class Config:
+        title = "MinRadius1"
+
 class MinRadius2(Config):
     name: Literal["MinRadius2"] = "MinRadius2"
     value: Literal["MinRadius2"] = "MinRadius2"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
+    class Config:
+        title = "MinRadius2"
+
 class MinRadius3(Config):
     name: Literal["MinRadius3"] = "MinRadius3"
     value: Literal["MinRadius3"] = "MinRadius3"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
+
+    class Config:
+        title = "MinRadius3"
 
 
 
@@ -208,7 +217,7 @@ class MinRadius(Config):
     field: Literal["dropdownlist"] = "dropdownlist"
 
     class Config:
-        title = "Keep Sides"
+        title = "Min Radius"
 
 class MaxRadius(Config):
     """
@@ -221,7 +230,7 @@ class MaxRadius(Config):
     placeHolder: Literal["Tek sayı, 5-10 arası"] = "Tek sayı, 5-10 arası"
 
     class Config:
-        title = "MaxRadius"
+        title = "Max Radius"
 
 
 
