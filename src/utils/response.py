@@ -44,9 +44,9 @@ def build_response_Blur(context):
 def build_response_Circle(context):
     outputImage = OutputImage(value=context.image)
 
-    gaussianBlurExecutorOutputs = HoughCircleExecutorOutputs(outputImage=outputImage)
+    houghCircleExecutorOutputs = HoughCircleExecutorOutputs(outputImage=outputImage)
 
-    houghCircleExecutorResponse = HoughCircleExecutorResponse(outputs=gaussianBlurExecutorOutputs)
+    houghCircleExecutorResponse = HoughCircleExecutorResponse(outputs=houghCircleExecutorOutputs)
 
     houghCircleExecutor = HoughCircleExecutor(value=houghCircleExecutorResponse)
 
