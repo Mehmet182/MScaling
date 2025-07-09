@@ -326,7 +326,7 @@ class HoughCircleExecutor(Config):
     field: Literal["option"] = "option"
 
     class Config:
-        title = "Package"
+        title = "HoughCircle"
         json_schema_extra = {
             "target": {
                 "value": 0
@@ -341,7 +341,7 @@ class GaussianBlurExecutor(Config):
     field: Literal["option"] = "option"
 
     class Config:
-        title = "Package"
+        title = "GaussianBlur"
         json_schema_extra = {
             "target": {
                 "value": 0
@@ -356,7 +356,7 @@ class MScaleExecutor(Config):
     field: Literal["option"] = "option"
 
     class Config:
-        title = "Package"
+        title = "GRAY"
         json_schema_extra = {
             "target": {
                 "value": 0
