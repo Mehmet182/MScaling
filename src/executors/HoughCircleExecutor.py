@@ -15,16 +15,10 @@ from components.MScaling.src.utils.response import build_response
 from components.MScaling.src.models.PackageModel import PackageModel
 
 
-class MScaleExecutor(Component):
+class HoughCircleExecutor(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
-
-        self.rotation_degree = self.request.get_param("Degree")
-        print(self.rotation_degree)
-
-        self.keep_side = self.request.get_param("KeepSide")
-        print(self.keep_side)
 
         self.image = self.request.get_param("inputImage")
 
@@ -33,14 +27,12 @@ class MScaleExecutor(Component):
         return {}
 
 
-    def rotate(self,img):
-
-        # Resize the image
-        return  cv2.cvtColor(img, cv2.COLOR_BGR2GRAY )
+    def HoughCircle(self,img):
+       return cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, dp=1, minDist=10,param1=100, param2=50,minRadius=20, maxRadius=100)
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        img.value = self.rotate(img.value)
+        img.value = self.HoughCircle(img.value)
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
         packageModel = build_response(context=self)
         return packageModel

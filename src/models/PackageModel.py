@@ -19,6 +19,22 @@ class InputImage(Input):
     class Config:
         title = "Image"
 
+class InputImage1(Input):
+    name: Literal["inputImage1"] = "inputImage1"
+    value: Union[List[Image], Image]
+    type: str = "object"
+
+    @validator("type", pre=True, always=True)
+    def set_type_based_on_value(cls, value, values):
+        value = values.get('value')
+        if isinstance(value, Image):
+            return "object"
+        elif isinstance(value, list):
+            return "list"
+
+    class Config:
+        title = "Image"
+
 
 class OutputImage(Output):
     name: Literal["outputImage"] = "outputImage"
@@ -35,6 +51,24 @@ class OutputImage(Output):
 
     class Config:
         title = "Image"
+
+class OutputImage2(Output):
+    name: Literal["outputImage2"] = "outputImage2"
+    value: Union[List[Image],Image]
+    type: str = "object"
+
+    @validator("type", pre=True, always=True)
+    def set_type_based_on_value(cls, value, values):
+        value = values.get('value')
+        if isinstance(value, Image):
+            return "object"
+        elif isinstance(value, list):
+            return "list"
+
+    class Config:
+        title = "Image"
+
+
 
 
 
@@ -72,8 +106,6 @@ class KeepSideBBox(Config):
 
 
 
-
-
 class Degree(Config):
     """
         Positive angles specify counterclockwise rotation while negative angles indicate clockwise rotation.
@@ -90,13 +122,161 @@ class Degree(Config):
 
 
 
+class KSize3x3(Config):
+    name: Literal["KSize3x3"] = "KSize3x3"
+    value: Literal["KSize3x3"] = "KSize3x3"
+    type: Literal["string"] = "string"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "KSize3x3"
+
+class KSize5x5(Config):
+    name: Literal["KSize5x5"] = "KSize5x5"
+    value: Literal["KSize5x5"] = "KSize5x5"
+    type: Literal["string"] = "string"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "KSize5x5"
+
+class KSize7x7(Config):
+    name: Literal["KSize7x7"] = "KSize7x7"
+    value: Literal["KSize7x7"] = "KSize7x7"
+    type: Literal["string"] = "string"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "KSize7x7"
+
+
+class KSize(Config):
+    """
+            bulanıklaştırmada kullanılacak pencere büyüklüğüdür.
+    """
+    name: Literal["Kernel Size"] = "Kernel Size"
+    value: Union[KSize3x3, KSize5x5,KSize7x7]
+    type: Literal["object"] = "object"
+    field: Literal["dropdownlist"] = "dropdownlist"
+
+    class Config:
+        title = "Keep Sides"
+
+
+class SigmaX(Config):
+    """
+            X ekseni (yatay) için standart sapma değeri.
+    """
+    name: Literal["SigmaX"] = "SigmaX"
+    value:int = Field(ge=0, le=10,default=4)
+    type: Literal["number"] = "number"
+    field: Literal["textInput"] = "textInput"
+    placeHolder: Literal["Tek sayı, 0-10 arası"] = "Tek sayı, 0-10 arası"
+
+    class Config:
+        title = "sigmax"
+
+
+
+class MinRadius1 :
+    name: Literal["MinRadius1"] = "MinRadius1"
+    value: Literal["MinRadius1"] = "MinRadius1"
+    type: Literal["string"] = "string"
+    field: Literal["option"] = "option"
+
+class MinRadius2:
+    name: Literal["MinRadius2"] = "MinRadius2"
+    value: Literal["MinRadius2"] = "MinRadius2"
+    type: Literal["string"] = "string"
+    field: Literal["option"] = "option"
+
+class MinRadius3:
+    name: Literal["MinRadius3"] = "MinRadius3"
+    value: Literal["MinRadius3"] = "MinRadius3"
+    type: Literal["string"] = "string"
+    field: Literal["option"] = "option"
+
+
+
+class MinRadius(Config):
+    """
+             Tespit edilecek minimum daire yarıçapı
+    """
+    name: Literal["MinRadius"] = "MinRadius"
+    value: Union[MinRadius1, MinRadius2, MinRadius3]
+    type: Literal["object"] = "object"
+    field: Literal["dropdownlist"] = "dropdownlist"
+
+    class Config:
+        title = "Keep Sides"
+
+class MaxRadius(Config):
+    """
+            Tespit edilecek maksimum daire yarıçapı
+    """
+    name: Literal["MaxRadius"] = "MaxRadius"
+    value:int
+    type: Literal["number"] = "number"
+    field: Literal["textInput"] = "textInput"
+    placeHolder: Literal["Tek sayı, 5-10 arası"] = "Tek sayı, 5-10 arası"
+
+    class Config:
+        title = "MaxRadius"
+
+
+
+
+class HoughCircleExecutorInputs(Inputs):
+    inputImage: InputImage
+    inputImage1: InputImage1
+
+
+class GaussianBlurExecutorInputs(Inputs):
+    inputImage: InputImage
+
+
 class MScaleExecutorInputs(Inputs):
     inputImage: InputImage
+
+
+
+
+
+
+class HoughCircleExecutorConfigs(Configs):
+    kSize=KSize
+    sigmaX=SigmaX
+
+class GaussianBlurExecutorConfigs(Configs):
+    minRadius=MinRadius
+    maxRadius=MaxRadius
 
 
 class MScaleExecutorConfigs(Configs):
     degree: Degree
     drawBBox: KeepSideBBox
+
+
+
+
+class HoughCircleExecutorRequest(Request):
+    inputs: Optional[HoughCircleExecutorInputs]
+    configs: HoughCircleExecutorConfigs
+
+    class Config:
+        json_schema_extra = {
+            "target": "configs"
+        }
+
+
+class GaussianBlurExecutorRequest(Request):
+    inputs: Optional[GaussianBlurExecutorInputs]
+    configs: GaussianBlurExecutorConfigs
+
+    class Config:
+        json_schema_extra = {
+            "target": "configs"
+        }
 
 
 class MScaleExecutorRequest(Request):
@@ -108,12 +288,66 @@ class MScaleExecutorRequest(Request):
             "target": "configs"
         }
 
+
+
+
+class HoughCircleExecutorOutputs(Outputs):
+    outputImage: OutputImage
+    outputImage2: OutputImage2
+
+class GaussianBlurExecutorOutputs(Outputs):
+    outputImage: OutputImage
+
+
 class MScaleExecutorOutputs(Outputs):
     outputImage: OutputImage
 
 
+
+
+
+class HoughCircleExecutorResponse(Response):
+    outputs: HoughCircleExecutorOutputs
+
+
+class GaussianBlurExecutorResponse(Response):
+    outputs: GaussianBlurExecutorOutputs
+
 class MScaleExecutorResponse(Response):
     outputs: MScaleExecutorOutputs
+
+
+
+
+class HoughCircleExecutor(Config):
+    name: Literal["MScaleExecutor"] = "HoughCircleExecutor"
+    value: Union[HoughCircleExecutorRequest, HoughCircleExecutorResponse]
+    type: Literal["object"] = "object"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "Package"
+        json_schema_extra = {
+            "target": {
+                "value": 0
+            }
+        }
+
+
+class GaussianBlurExecutor(Config):
+    name: Literal["GaussianBlurExecutor"] = "GaussianBlurExecutor"
+    value: Union[GaussianBlurExecutorRequest, GaussianBlurExecutorResponse]
+    type: Literal["object"] = "object"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "Package"
+        json_schema_extra = {
+            "target": {
+                "value": 0
+            }
+        }
+
 
 class MScaleExecutor(Config):
     name: Literal["MScaleExecutor"] = "MScaleExecutor"
@@ -130,17 +364,17 @@ class MScaleExecutor(Config):
         }
 
 
+
+
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[MScaleExecutor]
+    value: Union[MScaleExecutor,GaussianBlurExecutor,HoughCircleExecutor]
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
     class Config:
-        title = "Task"
-        json_schema_extra = {
-            "target": "value"
-        }
+        title = "Type"
+
 
 class PackageConfigs(Configs):
     executor: ConfigExecutor

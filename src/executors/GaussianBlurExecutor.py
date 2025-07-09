@@ -15,16 +15,11 @@ from components.MScaling.src.utils.response import build_response
 from components.MScaling.src.models.PackageModel import PackageModel
 
 
-class MScaleExecutor(Component):
+class GaussianBlurExecutor(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
 
-        self.rotation_degree = self.request.get_param("Degree")
-        print(self.rotation_degree)
-
-        self.keep_side = self.request.get_param("KeepSide")
-        print(self.keep_side)
 
         self.image = self.request.get_param("inputImage")
 
@@ -33,14 +28,13 @@ class MScaleExecutor(Component):
         return {}
 
 
-    def rotate(self,img):
+    def GaussianBlur(self,img):
 
-        # Resize the image
-        return  cv2.cvtColor(img, cv2.COLOR_BGR2GRAY )
+        return  cv2.GaussianBlur(img, (9, 9), 2)
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        img.value = self.rotate(img.value)
+        img.value = self.scaling(img.value)
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
         packageModel = build_response(context=self)
         return packageModel
