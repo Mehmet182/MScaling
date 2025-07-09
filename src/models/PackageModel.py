@@ -178,19 +178,19 @@ class SigmaX(Config):
 
 
 
-class MinRadius1 :
+class MinRadius1(Config) :
     name: Literal["MinRadius1"] = "MinRadius1"
     value: Literal["MinRadius1"] = "MinRadius1"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
-class MinRadius2:
+class MinRadius2(Config):
     name: Literal["MinRadius2"] = "MinRadius2"
     value: Literal["MinRadius2"] = "MinRadius2"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
-class MinRadius3:
+class MinRadius3(Config):
     name: Literal["MinRadius3"] = "MinRadius3"
     value: Literal["MinRadius3"] = "MinRadius3"
     type: Literal["string"] = "string"
@@ -244,12 +244,12 @@ class MScaleExecutorInputs(Inputs):
 
 
 class HoughCircleExecutorConfigs(Configs):
-    kSize=KSize
-    sigmaX=SigmaX
+    kSize:KSize
+    sigmaX:SigmaX
 
 class GaussianBlurExecutorConfigs(Configs):
-    minRadius=MinRadius
-    maxRadius=MaxRadius
+    minRadius:MinRadius
+    maxRadius:MaxRadius
 
 
 class MScaleExecutorConfigs(Configs):
@@ -320,7 +320,7 @@ class MScaleExecutorResponse(Response):
 
 
 class HoughCircleExecutor(Config):
-    name: Literal["MScaleExecutor"] = "HoughCircleExecutor"
+    name: Literal["HoughCircleExecutor"] = "HoughCircleExecutor"
     value: Union[HoughCircleExecutorRequest, HoughCircleExecutorResponse]
     type: Literal["object"] = "object"
     field: Literal["option"] = "option"
