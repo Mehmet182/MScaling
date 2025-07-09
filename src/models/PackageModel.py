@@ -250,8 +250,6 @@ class MScaleExecutorInputs(Inputs):
 
 
 
-
-
 class HoughCircleExecutorConfigs(Configs):
     kSize:KSize
     sigmaX:SigmaX

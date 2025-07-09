@@ -20,6 +20,14 @@ class HoughCircleExecutor(Component):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
 
+
+
+        self.min_radius = self.request.get_param("MinRadius")
+        print(self.min_radius)
+
+        self.max_radius = self.request.get_param("MaxRadius")
+        print(self.max_radius)
+
         self.image = self.request.get_param("inputImage")
 
     @staticmethod
@@ -28,7 +36,7 @@ class HoughCircleExecutor(Component):
 
 
     def HoughCircle(self,img):
-       return cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, dp=1, minDist=10,param1=100, param2=50,minRadius=20, maxRadius=100)
+       return cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, dp=1, minDist=10,param1=100, param2=50, self.min_radius,self.max_radius)
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
