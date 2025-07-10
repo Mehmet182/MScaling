@@ -114,11 +114,9 @@ class Degree(Config):
     value: int = Field(ge=-359.0, le=359.0,default=0)
     type: Literal["number"] = "number"
     field: Literal["textInput"] = "textInput"
-    placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
 
     class Config:
         title = "Angleee"
-
 
 
 class KSize3x3(Config):
@@ -170,7 +168,6 @@ class SigmaX(Config):
     value:int = Field(ge=0, le=10,default=4)
     type: Literal["number"] = "number"
     field: Literal["textInput"] = "textInput"
-    placeHolder: Literal["Tek sayı, 0-10 arası"] = "Tek sayı, 0-10 arası"
 
     class Config:
         title = "sigmax"
@@ -224,7 +221,6 @@ class MaxRadius(Config):
     value:int
     type: Literal["number"] = "number"
     field: Literal["textInput"] = "textInput"
-    placeHolder: Literal["Tek sayı, 5-10 arası"] = "Tek sayı, 5-10 arası"
 
     class Config:
         title = "Max Radius"
