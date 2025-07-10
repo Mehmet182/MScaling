@@ -150,13 +150,18 @@ class KSize7x7(Config):
         title = "KSize7x7"
 
 
+class SizeTrue(Config):
+    pass
+class SizeFalse(Config):
+    pass
+
 class KSize(Config):
     """
             bulanıklaştırmada kullanılacak pencere büyüklüğüdür.
     """
     name: Literal["Kernel Size"] = "Kernel Size"
-    value: Union[KSize3x3, KSize5x5,KSize7x7]
-    type: Literal["object"] = "object"
+    value: Union[SizeTrue,SizeFalse]
+    type: Literal["bool"] = "bool"
     field: Literal["dropdownlist"] = "dropdownlist"
 
     class Config:
@@ -208,13 +213,19 @@ class MinRadius3(Config):
 
 
 
+class MinRadiusTrue(Config):
+    pass
+
+class MinRadiusFalse(Config):
+    pass
+
 class MinRadius(Config):
     """
              Tespit edilecek minimum daire yarıçapı
     """
     name: Literal["MinRadius"] = "MinRadius"
-    value: Union[MinRadius1, MinRadius2, MinRadius3]
-    type: Literal["object"] = "object"
+    value: Union[MinRadiusFalse, MinRadiusTrue]
+    type: Literal["bool"] = "bool"
     field: Literal["dropdownlist"] = "dropdownlist"
 
     class Config:

@@ -36,7 +36,7 @@ class HoughCircleExecutor(Component):
 
 
     def HoughCircle(self,img):
-       return cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, dp=1, minDist=10,param1=100, param2=50, self.min_radius,self.max_radius)
+       return cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, dp=1, minDist=10,param1=100, param2=50, minRadius=self.min_radius, maxRadius=self.max_radius)
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)

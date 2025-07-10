@@ -34,12 +34,14 @@ class GaussianBlurExecutor(Component):
 
 
     def GaussianBlur(self,img):
+        ksize = tuple(self.ksize) if isinstance(self.ksize, (list, tuple)) else (3, 3)
+        sigmax = self.sigmax if isinstance(self.sigmax, (int, float)) else 0
 
-        return  cv2.GaussianBlur(img, self.ksize, self.sigmax)
+        return cv2.GaussianBlur(img, ksize, sigmax)
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        img.value = self.scaling(img.value)
+        img.value = self.GaussianBlur(img.value)
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
         packageModel = build_response_Blur(context=self)
         return packageModel
