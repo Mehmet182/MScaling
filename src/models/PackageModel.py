@@ -121,7 +121,6 @@ class Degree(Config):
 
 
 
-
 class KSize3x3(Config):
     name: Literal["KSize3x3"] = "KSize3x3"
     value: Tuple[int, int] = Field(default=(3, 3))
@@ -251,8 +250,8 @@ class MinRadius(Config):
              Tespit edilecek minimum daire yarıçapı
     """
     name: Literal["MinRadius"] = "MinRadius"
-    value: Union[MinRadiusFalse, MinRadiusTrue]
-    type: Literal["bool"] = "bool"
+    value: Union[MinRadius1, MinRadius2,MinRadius3]
+    type: Literal["option"] = "option"
     field: Literal["dropdownlist"] = "dropdownlist"
 
     class Config:
