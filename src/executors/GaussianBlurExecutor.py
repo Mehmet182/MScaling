@@ -34,7 +34,8 @@ class GaussianBlurExecutor(Component):
 
 
     def GaussianBlur(self,img):
-        return cv2.GaussianBlur(img, self.ksize, self.sigmax)
+
+        return cv2.GaussianBlur(img, (self.ksize,self.ksize) ,self.sigmax)
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
