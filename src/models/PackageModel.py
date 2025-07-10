@@ -173,7 +173,7 @@ class KSize(Config):
     """
             bulanıklaştırmada kullanılacak pencere büyüklüğüdür.
     """
-    name: Literal["Kernel Size"] = "Kernel Size"
+    name: Literal["KSize"] = "KSize"
     value: Union[SizeTrue,SizeFalse]
     type: Literal["bool"] = "bool"
     field: Literal["dropdownlist"] = "dropdownlist"
