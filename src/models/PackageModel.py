@@ -1,5 +1,5 @@
 from pydantic import Field, validator
-from typing import List, Optional, Union, Literal
+from typing import List, Optional, Union, Literal,Tuple
 from sdks.novavision.src.base.model import Package, Image, Inputs, Configs, Outputs, Response, Request, Output, Input, Config
 
 
@@ -19,8 +19,8 @@ class InputImage(Input):
     class Config:
         title = "Image"
 
-class InputImage1(Input):
-    name: Literal["inputImage1"] = "inputImage1"
+class InputDetection(Input):
+    name: Literal["InputDetection"] = "InputDetection"
     value: Union[List[Image], Image]
     type: str = "object"
 
@@ -33,7 +33,7 @@ class InputImage1(Input):
             return "list"
 
     class Config:
-        title = "Image"
+        title = "Detection"
 
 
 class OutputImage(Output):
@@ -52,8 +52,8 @@ class OutputImage(Output):
     class Config:
         title = "Image"
 
-class OutputImage2(Output):
-    name: Literal["outputImage2"] = "outputImage2"
+class OutputDetection(Output):
+    name: Literal["outputDetection"] = "outputDetection"
     value: Union[List[Image],Image]
     type: str = "object"
 
@@ -66,7 +66,7 @@ class OutputImage2(Output):
             return "list"
 
     class Config:
-        title = "Image"
+        title = "detection"
 
 
 
@@ -124,8 +124,8 @@ class Degree(Config):
 
 class KSize3x3(Config):
     name: Literal["KSize3x3"] = "KSize3x3"
-    value: Literal["KSize3x3"] = "KSize3x3"
-    type: Literal["string"] = "string"
+    value: Tuple[int, int] = Field(default=(3, 3))
+    type: Literal["tuple"] = "tuple"
     field: Literal["option"] = "option"
 
     class Config:
@@ -133,8 +133,8 @@ class KSize3x3(Config):
 
 class KSize5x5(Config):
     name: Literal["KSize5x5"] = "KSize5x5"
-    value: Literal["KSize5x5"] = "KSize5x5"
-    type: Literal["string"] = "string"
+    value: Tuple[int, int] = Field(default=(5, 5))
+    type: Literal["tuple"] = "tuple"
     field: Literal["option"] = "option"
 
     class Config:
@@ -142,8 +142,8 @@ class KSize5x5(Config):
 
 class KSize7x7(Config):
     name: Literal["KSize7x7"] = "KSize7x7"
-    value: Literal["KSize7x7"] = "KSize7x7"
-    type: Literal["string"] = "string"
+    value: Tuple[int, int] = Field(default=(7, 7))
+    type: Literal["tuple"] = "tuple"
     field: Literal["option"] = "option"
 
     class Config:
@@ -178,19 +178,20 @@ class SigmaX(Config):
 
 
 
-class MinRadius1(Config) :
+class MinRadius1(Config):
     name: Literal["MinRadius1"] = "MinRadius1"
-    value: Literal["MinRadius1"] = "MinRadius1"
-    type: Literal["string"] = "string"
+    value: int = Field(default=1)
+    type: Literal["number"] = "number"
     field: Literal["option"] = "option"
 
     class Config:
         title = "MinRadius1"
 
+
 class MinRadius2(Config):
     name: Literal["MinRadius2"] = "MinRadius2"
-    value: Literal["MinRadius2"] = "MinRadius2"
-    type: Literal["string"] = "string"
+    value: int=Field(default=2)
+    type: Literal["number"] = "number"
     field: Literal["option"] = "option"
 
     class Config:
@@ -198,8 +199,8 @@ class MinRadius2(Config):
 
 class MinRadius3(Config):
     name: Literal["MinRadius3"] = "MinRadius3"
-    value: Literal["MinRadius3"] = "MinRadius3"
-    type: Literal["string"] = "string"
+    value: int=Field(default=3)
+    type: Literal["number"] = "number"
     field: Literal["option"] = "option"
 
     class Config:
@@ -237,7 +238,7 @@ class MaxRadius(Config):
 
 class HoughCircleExecutorInputs(Inputs):
     inputImage: InputImage
-    inputImage1: InputImage1
+    inputDetection: InputDetection
 
 
 class GaussianBlurExecutorInputs(Inputs):
@@ -300,7 +301,7 @@ class MScaleExecutorRequest(Request):
 
 class HoughCircleExecutorOutputs(Outputs):
     outputImage: OutputImage
-    outputImage2: OutputImage2
+    outputDetection: OutputDetection
 
 class GaussianBlurExecutorOutputs(Outputs):
     outputImage: OutputImage
@@ -363,7 +364,7 @@ class MScaleExecutor(Config):
     field: Literal["option"] = "option"
 
     class Config:
-        title = "GRAY"
+        title = "Rotate"
         json_schema_extra = {
             "target": {
                 "value": 0
@@ -378,6 +379,7 @@ class ConfigExecutor(Config):
     value: Union[MScaleExecutor,GaussianBlurExecutor,HoughCircleExecutor]
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
+    restart: Literal[True] = True
 
     class Config:
         title = "Type"
