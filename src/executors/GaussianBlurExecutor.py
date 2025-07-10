@@ -18,10 +18,11 @@ from components.MScaling.src.models.PackageModel import PackageModel
 class GaussianBlurExecutor(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
+        print(self.request.data)
         self.request.model = PackageModel(**(self.request.data))
 
-        self.ksize = self.request.get_param("KSize")
-        print(self.ksize)
+        #self.ksize = self.request.get_param("KSize")
+        #print(self.ksize)
 
         self.sigmax = self.request.get_param("SigmaX")
         print(self.sigmax)
@@ -35,7 +36,7 @@ class GaussianBlurExecutor(Component):
 
     def GaussianBlur(self,img):
 
-        return cv2.GaussianBlur(img, (self.ksize,self.ksize) ,self.sigmax)
+        return cv2.GaussianBlur(img,(3,3) ,self.sigmax)
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)

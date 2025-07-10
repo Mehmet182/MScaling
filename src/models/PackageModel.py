@@ -121,8 +121,8 @@ class Degree(Config):
 
 class KSize3x3(Config):
     name: Literal["KSize3x3"] = "KSize3x3"
-    value:int=3
-    type: Literal["tuple"] = "tuple"
+    value:Literal["KSize3x3"] = "KSize3x3"
+    type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
     class Config:
@@ -130,8 +130,8 @@ class KSize3x3(Config):
 
 class KSize5x5(Config):
     name: Literal["KSize5x5"] = "KSize5x5"
-    value: int=5
-    type: Literal["tuple"] = "tuple"
+    value: Literal["KSize5x5"] = "KSize5x5"
+    type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
     class Config:
@@ -139,8 +139,8 @@ class KSize5x5(Config):
 
 class KSize7x7(Config):
     name: Literal["KSize7x7"] = "KSize7x7"
-    value: int=7
-    type: Literal["tuple"] = "tuple"
+    value: Literal["KSize7x7"] = "KSize7x7"
+    type: Literal["string"] = "string"
     field: Literal["option"] = "option"
 
     class Config:
