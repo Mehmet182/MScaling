@@ -252,13 +252,13 @@ class MScaleExecutorInputs(Inputs):
 
 
 class HoughCircleExecutorConfigs(Configs):
-    kSize:KSize
-    sigmaX:SigmaX
+
+    minRadius: MinRadius
+    maxRadius: MaxRadius
 
 class GaussianBlurExecutorConfigs(Configs):
-    minRadius:MinRadius
-    maxRadius:MaxRadius
-
+    kSize:KSize
+    sigmaX:SigmaX
 
 class MScaleExecutorConfigs(Configs):
     degree: Degree
