@@ -179,7 +179,11 @@ class SigmaX(Config):
 
 class MinRadius1(Config):
     name: Literal["MinRadius1"] = "MinRadius1"
+<<<<<<< HEAD
     value: int=1
+=======
+    value: int = 1
+>>>>>>> fdbd1fd04806185bbe58e4bb7e1800f07580d51a
     type: Literal["number"] = "number"
     field: Literal["option"] = "option"
 
