@@ -151,9 +151,23 @@ class KSize7x7(Config):
 
 
 class SizeTrue(Config):
-    pass
+    name: Literal["True"] = "True"
+    value: Literal[True] = True
+    type: Literal["bool"] = "bool"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "Enable"
+
+
 class SizeFalse(Config):
-    pass
+    name: Literal["False"] = "False"
+    value: Literal[False] = False
+    type: Literal["bool"] = "bool"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "Disable"
 
 class KSize(Config):
     """
@@ -214,10 +228,23 @@ class MinRadius3(Config):
 
 
 class MinRadiusTrue(Config):
-    pass
+    name: Literal["True"] = "True"
+    value: Literal[True] = True
+    type: Literal["bool"] = "bool"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "Enable"
+
 
 class MinRadiusFalse(Config):
-    pass
+    name: Literal["False"] = "False"
+    value: Literal[False] = False
+    type: Literal["bool"] = "bool"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "Disable"
 
 class MinRadius(Config):
     """
