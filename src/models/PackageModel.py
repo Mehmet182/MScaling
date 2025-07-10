@@ -198,7 +198,7 @@ class SigmaX(Config):
 
 class MinRadius1(Config):
     name: Literal["MinRadius1"] = "MinRadius1"
-    value: int = Field(default=1)
+    value: int = 1
     type: Literal["number"] = "number"
     field: Literal["option"] = "option"
 
@@ -208,7 +208,7 @@ class MinRadius1(Config):
 
 class MinRadius2(Config):
     name: Literal["MinRadius2"] = "MinRadius2"
-    value: int=Field(default=2)
+    value: int=2
     type: Literal["number"] = "number"
     field: Literal["option"] = "option"
 
@@ -217,7 +217,7 @@ class MinRadius2(Config):
 
 class MinRadius3(Config):
     name: Literal["MinRadius3"] = "MinRadius3"
-    value: int=Field(default=3)
+    value: int=3
     type: Literal["number"] = "number"
     field: Literal["option"] = "option"
 
