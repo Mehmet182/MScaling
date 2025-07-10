@@ -1,5 +1,5 @@
 from pydantic import Field, validator
-from typing import List, Optional, Union, Literal,Tuple
+from typing import List, Optional, Union, Literal
 from sdks.novavision.src.base.model import Package, Image, Inputs, Configs, Outputs, Response, Request, Output, Input, Config
 
 
@@ -19,7 +19,7 @@ class InputImage(Input):
     class Config:
         title = "Image"
 
-class InputDetection(Input):
+class InputImage2(Input):
     name: Literal["InputDetection"] = "InputDetection"
     value: Union[List[Image], Image]
     type: str = "object"
@@ -52,7 +52,7 @@ class OutputImage(Output):
     class Config:
         title = "Image"
 
-class OutputDetection(Output):
+class OutputImage2(Output):
     name: Literal["outputDetection"] = "outputDetection"
     value: Union[List[Image],Image]
     type: str = "object"
@@ -123,7 +123,7 @@ class Degree(Config):
 
 class KSize3x3(Config):
     name: Literal["KSize3x3"] = "KSize3x3"
-    value: Tuple[int, int] = Field(default=(3, 3))
+    value:int=3
     type: Literal["tuple"] = "tuple"
     field: Literal["option"] = "option"
 
@@ -132,7 +132,7 @@ class KSize3x3(Config):
 
 class KSize5x5(Config):
     name: Literal["KSize5x5"] = "KSize5x5"
-    value: Tuple[int, int] = Field(default=(5, 5))
+    value: int=5
     type: Literal["tuple"] = "tuple"
     field: Literal["option"] = "option"
 
@@ -141,7 +141,7 @@ class KSize5x5(Config):
 
 class KSize7x7(Config):
     name: Literal["KSize7x7"] = "KSize7x7"
-    value: Tuple[int, int] = Field(default=(7, 7))
+    value: int=7
     type: Literal["tuple"] = "tuple"
     field: Literal["option"] = "option"
 
@@ -149,32 +149,13 @@ class KSize7x7(Config):
         title = "KSize7x7"
 
 
-class SizeTrue(Config):
-    name: Literal["True"] = "True"
-    value: Literal[True] = True
-    type: Literal["bool"] = "bool"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "Enable"
-
-
-class SizeFalse(Config):
-    name: Literal["False"] = "False"
-    value: Literal[False] = False
-    type: Literal["bool"] = "bool"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "Disable"
-
 class KSize(Config):
     """
             bulanıklaştırmada kullanılacak pencere büyüklüğüdür.
     """
     name: Literal["KSize"] = "KSize"
-    value: Union[SizeTrue,SizeFalse]
-    type: Literal["bool"] = "bool"
+    value: Union[KSize3x3,KSize5x5,KSize7x7]
+    type: Literal["option"] = "option"
     field: Literal["dropdownlist"] = "dropdownlist"
 
     class Config:
@@ -198,7 +179,7 @@ class SigmaX(Config):
 
 class MinRadius1(Config):
     name: Literal["MinRadius1"] = "MinRadius1"
-    value: int = Field(default=1)
+    value: int=1
     type: Literal["number"] = "number"
     field: Literal["option"] = "option"
 
@@ -208,7 +189,7 @@ class MinRadius1(Config):
 
 class MinRadius2(Config):
     name: Literal["MinRadius2"] = "MinRadius2"
-    value: int=Field(default=2)
+    value: int=2
     type: Literal["number"] = "number"
     field: Literal["option"] = "option"
 
@@ -217,33 +198,12 @@ class MinRadius2(Config):
 
 class MinRadius3(Config):
     name: Literal["MinRadius3"] = "MinRadius3"
-    value: int=Field(default=3)
+    value: int=3
     type: Literal["number"] = "number"
     field: Literal["option"] = "option"
 
     class Config:
         title = "MinRadius3"
-
-
-
-class MinRadiusTrue(Config):
-    name: Literal["True"] = "True"
-    value: Literal[True] = True
-    type: Literal["bool"] = "bool"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "Enable"
-
-
-class MinRadiusFalse(Config):
-    name: Literal["False"] = "False"
-    value: Literal[False] = False
-    type: Literal["bool"] = "bool"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "Disable"
 
 class MinRadius(Config):
     """
@@ -271,11 +231,9 @@ class MaxRadius(Config):
         title = "Max Radius"
 
 
-
-
 class HoughCircleExecutorInputs(Inputs):
     inputImage: InputImage
-    inputDetection: InputDetection
+    inputImage2: InputImage2
 
 
 class GaussianBlurExecutorInputs(Inputs):
@@ -338,7 +296,7 @@ class MScaleExecutorRequest(Request):
 
 class HoughCircleExecutorOutputs(Outputs):
     outputImage: OutputImage
-    outputDetection: OutputDetection
+    outputImage2: OutputImage2
 
 class GaussianBlurExecutorOutputs(Outputs):
     outputImage: OutputImage
