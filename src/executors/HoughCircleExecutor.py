@@ -48,7 +48,7 @@ class HoughCircleExecutor(Component):
 
         print("load_self.min_radius:",self.min_radius)
 
-    def HoughCircle(self,img):
+    def huffeman_circle_detection(self,img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         gray = cv2.GaussianBlur(gray, (9, 9), 2, 2)
@@ -67,7 +67,7 @@ class HoughCircleExecutor(Component):
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        img.value = self.HoughCircle(img.value)
+        img.value = self.huffeman_circle_detection(img.value)
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
         packageModel = build_response_Circle(context=self)
         return packageModel
