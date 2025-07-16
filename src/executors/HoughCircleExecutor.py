@@ -50,12 +50,14 @@ class HoughCircleExecutor(Component):
 
     def huffeman_circle_detection(self,img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
+        print("gray:",gray)
         gray = cv2.GaussianBlur(gray, (9, 9), 2, 2)
-
+        print("gray2:",gray.shape)
+        import numpy as np
+        gray = gray.astype(np.uint8)
         circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, dp=1, minDist=10,
                                   param1=100, param2=50,
-                                  minRadius=self.min_radius, maxRadius=self.max_radius)
+                                  minRadius=20, maxRadius=100)
 
         for c in circles[0, :]:
             print(c)
@@ -83,6 +85,8 @@ class HoughCircleExecutor(Component):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
         img2=Image.get_frame(img=self.image2, redis_db=self.redis_db)
 
+        print("img:",img.value)
+
         img.value = self.huffeman_circle_detection(img.value)
 
         combined = self.combine_images_side_by_side(img.value, img2.value)
@@ -90,9 +94,9 @@ class HoughCircleExecutor(Component):
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
         self.image2 = Image.set_frame(img=img2, package_uID=self.uID, redis_db=self.redis_db)
 
-        self.combinedImage = Image.set_frame_from_ndarray(img_array=combined
-                                                          ,package_uID=self.uID
-                                                          ,redis_db=self.redis_db)
+        self.combined = combined.set_frame(img=self.combined, package_uID=self.uID, redis_db=self.redis_db)
+
+
 
         packageModel = build_response_Circle(context=self)
         return packageModel
