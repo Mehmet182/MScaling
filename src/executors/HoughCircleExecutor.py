@@ -18,15 +18,15 @@ from components.MScaling.src.models.PackageModel import PackageModel
 class HoughCircleExecutor(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
+        print(self.request.data)
         self.request.model = PackageModel(**(self.request.data))
 
 
+        self.min_radius = self.request.get_param("MinRadius")
+        print(self.min_radius)
 
-        #self.min_radius = self.request.get_param("MinRadius")
-        #print(self.min_radius)
-
-        #self.max_radius = self.request.get_param("MaxRadius")
-        #print(self.max_radius)
+        self.max_radius = self.request.get_param("MaxRadius")
+        print(self.max_radius)
 
         self.image = self.request.get_param("inputImage")
 

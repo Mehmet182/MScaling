@@ -24,8 +24,11 @@ class GaussianBlurExecutor(Component):
         self.ksize = self.request.get_param("KSize")
         print(self.ksize)
 
+        self.load_parameters()
+
         self.sigmax = self.request.get_param("SigmaX")
         print(self.sigmax)
+
 
         self.image = self.request.get_param("inputImage")
 
@@ -33,10 +36,20 @@ class GaussianBlurExecutor(Component):
     def bootstrap(config: dict) -> dict:
         return {}
 
+    def load_parameters(self):
+        if self.ksize == "KSize5x5":
+            self.ksize=5
+        elif self.ksize == "KSize3x3":
+            self.ksize=3
+        else:
+            self.ksize=7
+
+        print("self.ksize:",self.ksize)
+        return self.ksize
 
     def GaussianBlur(self,img):
 
-        return cv2.GaussianBlur(img,(3,3) ,5)
+        return cv2.GaussianBlur(img,(self.ksize,self.ksize) ,self.sigmax)
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
