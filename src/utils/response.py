@@ -25,9 +25,9 @@ def build_response_Mscaling(context):
 
 def build_response_Blur(context):
     outputImage = OutputImage(value=context.image)
-    outputImage2 = OutputImage2(value=context.image)
 
-    gaussianBlurExecutorOutputs = GaussianBlurExecutorOutputs(outputImage=outputImage,outputImage2=outputImage2)
+
+    gaussianBlurExecutorOutputs = GaussianBlurExecutorOutputs(outputImage=outputImage)
 
     gaussianBlurExecutorResponse = GaussianBlurExecutorResponse(outputs=gaussianBlurExecutorOutputs)
 
@@ -44,8 +44,9 @@ def build_response_Blur(context):
 
 def build_response_Circle(context):
     outputImage = OutputImage(value=context.image)
+    outputImage2 = OutputImage2(value=context.image)
 
-    houghCircleExecutorOutputs = HoughCircleExecutorOutputs(outputImage=outputImage)
+    houghCircleExecutorOutputs = HoughCircleExecutorOutputs(outputImage=outputImage,outputImage2=outputImage2)
 
     houghCircleExecutorResponse = HoughCircleExecutorResponse(outputs=houghCircleExecutorOutputs)
 
