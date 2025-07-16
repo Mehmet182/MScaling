@@ -5,6 +5,7 @@
 import os
 import cv2
 import sys
+import numpy as np
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../'))
 
@@ -53,7 +54,6 @@ class HoughCircleExecutor(Component):
         print("gray:",gray)
         gray = cv2.GaussianBlur(gray, (9, 9), 2, 2)
         print("gray2:",gray.shape)
-        import numpy as np
         gray = gray.astype(np.uint8)
         circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, dp=1, minDist=10,
                                   param1=100, param2=50,
@@ -67,36 +67,43 @@ class HoughCircleExecutor(Component):
 
         return img
 
-    def combine_images_side_by_side(self, img1, img2):
-        height = max(img1.shape[0], img2.shape[0])
-        width1 = img1.shape[1]
-        width2 = img2.shape[1]
+    def combine_images_side_by_side(self, img1, img2, target_size=(512, 512)):
+        """
+        İki resmi sabit bir boyuta getirerek (default: 512x512), yan yana birleştirir.
+        Gri görüntüler otomatik olarak BGR formatına çevrilir.
+        """
 
-        # Yüksekliği eşitlemek için boşluk ekle
-        if img1.shape[0] < height:
-            img1 = cv2.copyMakeBorder(img1, 0, height - img1.shape[0], 0, 0, cv2.BORDER_CONSTANT, value=(0, 0, 0))
-        if img2.shape[0] < height:
-            img2 = cv2.copyMakeBorder(img2, 0, height - img2.shape[0], 0, 0, cv2.BORDER_CONSTANT, value=(0, 0, 0))
+        # Gri görüntüyse BGR'a çevir
+        if len(img1.shape) == 2:
+            img1 = cv2.cvtColor(img1, cv2.COLOR_GRAY2BGR)
+        if len(img2.shape) == 2:
+            img2 = cv2.cvtColor(img2, cv2.COLOR_GRAY2BGR)
 
-        combined = cv2.hconcat([img1, img2])
+        # Sabit boyuta yeniden boyutlandır
+        img1_resized = cv2.resize(img1, target_size)
+        img2_resized = cv2.resize(img2, target_size)
+
+        # Yan yana birleştir
+        combined = cv2.hconcat([img1_resized, img2_resized])
         return combined
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        img2=Image.get_frame(img=self.image2, redis_db=self.redis_db)
+        img2 = Image.get_frame(img=self.image2, redis_db=self.redis_db)
 
-        print("img:",img.value)
 
-        img.value = self.huffeman_circle_detection(img.value)
+        img_circle = self.huffeman_circle_detection(img.value)
 
-        combined = self.combine_images_side_by_side(img.value, img2.value)
+        img.value = self.combine_images_side_by_side(img.value, img_circle)
+
+        img2.value = self.combine_images_side_by_side(img.value, img2.value)
 
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
+
         self.image2 = Image.set_frame(img=img2, package_uID=self.uID, redis_db=self.redis_db)
 
-        self.combined = combined.set_frame(img=self.combined, package_uID=self.uID, redis_db=self.redis_db)
-
-
+        #print("img type:", type(img), "img.value type:", type(img.value))
+        #print("img2 type:", type(img2), "img2.value type:", type(img2.value))
 
         packageModel = build_response_Circle(context=self)
         return packageModel
