@@ -1,7 +1,7 @@
 
 from sdks.novavision.src.helper.package import PackageHelper
 from components.MScaling.src.models.PackageModel import PackageModel, PackageConfigs, ConfigExecutor, MScaleExecutorOutputs, MScaleExecutorResponse, MScaleExecutor, OutputImage
-from components.MScaling.src.models.PackageModel import HoughCircleExecutorOutputs,HoughCircleExecutorResponse ,HoughCircleExecutor,OutputImage2
+from components.MScaling.src.models.PackageModel import HoughCircleExecutorOutputs,HoughCircleExecutorResponse ,HoughCircleExecutor,OutputImageA
 from components.MScaling.src.models.PackageModel import GaussianBlurExecutorOutputs , GaussianBlurExecutorResponse,GaussianBlurExecutor
 
 
@@ -44,9 +44,9 @@ def build_response_Blur(context):
 
 def build_response_Circle(context):
     outputImage = OutputImage(value=context.image)
-    outputImage2 = OutputImage2(value=context.image)
+    outputImageA = OutputImageA(value=context.image)
 
-    houghCircleExecutorOutputs = HoughCircleExecutorOutputs(outputImage=outputImage,outputImage2=outputImage2)
+    houghCircleExecutorOutputs = HoughCircleExecutorOutputs(outputImage=outputImage,outputImage2=outputImageA)
 
     houghCircleExecutorResponse = HoughCircleExecutorResponse(outputs=houghCircleExecutorOutputs)
 
