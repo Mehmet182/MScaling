@@ -23,21 +23,47 @@ class HoughCircleExecutor(Component):
 
 
         self.min_radius = self.request.get_param("MinRadius")
-        print(self.min_radius)
+        print("self.min_radius:",self.min_radius)
+
+        self.load_parameters()
 
         self.max_radius = self.request.get_param("MaxRadius")
-        print(self.max_radius)
+        print("self.min_radius:",self.max_radius)
 
         self.image = self.request.get_param("inputImage")
+        self.image2 = self.request.get_param("inputImage2")
 
 
     @staticmethod
     def bootstrap(config: dict) -> dict:
         return {}
 
+    def load_parameters(self):
+        if self.min_radius=="MinRadius1":
+            self.min_radius = 10
+        elif self.min_radius=="MinRadius2":
+            self.min_radius = 20
+        else:
+            self.min_radius = 30
+
+        print("load_self.min_radius:",self.min_radius)
 
     def HoughCircle(self,img):
-       return cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, dp=1, minDist=10,param1=100, param2=50, minRadius=self.min_radius, maxRadius=self.max_radius)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        gray = cv2.GaussianBlur(gray, (9, 9), 2, 2)
+
+        circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, dp=1, minDist=10,
+                                  param1=100, param2=50,
+                                  minRadius=self.min_radius, maxRadius=self.max_radius)
+
+        for c in circles[0, :]:
+            print(c)
+            cx, cy, r = c
+            cv2.circle(img, (int(cx), int(cy)), 2,(0, 255, 0), 2, 8, 0)
+            cv2.circle(img, (int(cx), int(cy)), int(r),(0, 0, 255), 2, 8, 0)
+
+        return img
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)

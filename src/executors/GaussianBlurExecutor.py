@@ -22,12 +22,13 @@ class GaussianBlurExecutor(Component):
         self.request.model = PackageModel(**(self.request.data))
 
         self.ksize = self.request.get_param("KSize")
-        print(self.ksize)
+        print("parameters_self.ksize",self.ksize)
 
         self.load_parameters()
+        #print("parameters_self.ksize",self.ksize)
 
         self.sigmax = self.request.get_param("SigmaX")
-        print(self.sigmax)
+        print("parameters_self.sigmax",self.sigmax)
 
 
         self.image = self.request.get_param("inputImage")
@@ -44,7 +45,7 @@ class GaussianBlurExecutor(Component):
         else:
             self.ksize=7
 
-        print("self.ksize:",self.ksize)
+        print("load_self.ksize:",self.ksize)
         return self.ksize
 
     def GaussianBlur(self,img):
