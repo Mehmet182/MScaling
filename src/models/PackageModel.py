@@ -20,7 +20,7 @@ class InputImage(Input):
         title = "Image"
 
 class InputImage2(Input):
-    name: Literal["InputImage2"] = "InputImage2"
+    name: Literal["inputImage2"] = "inputImage2"
     value: Union[List[Image], Image]
     type: str = "object"
 
@@ -53,7 +53,7 @@ class OutputImage(Output):
         title = "Image"
 
 class OutputImage2(Output):
-    name: Literal["OutputImage2"] = "OutputImage2"
+    name: Literal["outputImage2"] = "outputImage2"
     value: Union[List[Image],Image]
     type: str = "object"
 
