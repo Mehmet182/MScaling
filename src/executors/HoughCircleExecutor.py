@@ -46,7 +46,7 @@ class HoughCircleExecutor(Component):
         else:
             self.min_radius = 30
 
-        print("load_self.min_radius:",self.min_radius)
+        print("self.min_radius:",self.min_radius)
 
     def huffeman_circle_detection(self,img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
