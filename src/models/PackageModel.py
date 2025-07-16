@@ -52,8 +52,9 @@ class OutputImage(Output):
     class Config:
         title = "Image"
 
-class OutputImage2(Output):
-    name: Literal["outputImage2"] = "outputImage2"
+
+class OutputImageA(Output):
+    name: Literal["outputImageA"] = "outputImageA"
     value: Union[List[Image],Image]
     type: str = "object"
 
@@ -291,7 +292,7 @@ class MScaleExecutorRequest(Request):
 
 class HoughCircleExecutorOutputs(Outputs):
     outputImage: OutputImage
-    outputImage2: OutputImage2
+    outputImageA: OutputImageA
 
 class GaussianBlurExecutorOutputs(Outputs):
     outputImage: OutputImage
