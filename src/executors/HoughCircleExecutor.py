@@ -22,13 +22,14 @@ class HoughCircleExecutor(Component):
 
 
 
-        self.min_radius = self.request.get_param("MinRadius")
-        print(self.min_radius)
+        #self.min_radius = self.request.get_param("MinRadius")
+        #print(self.min_radius)
 
-        self.max_radius = self.request.get_param("MaxRadius")
-        print(self.max_radius)
+        #self.max_radius = self.request.get_param("MaxRadius")
+        #print(self.max_radius)
 
         self.image = self.request.get_param("inputImage")
+
 
     @staticmethod
     def bootstrap(config: dict) -> dict:

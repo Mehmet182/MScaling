@@ -153,7 +153,7 @@ class KSize(Config):
     """
     name: Literal["KSize"] = "KSize"
     value: Union[KSize3x3,KSize5x5,KSize7x7]
-    type: Literal["option"] = "option"
+    type: Literal["object"] = "object"
     field: Literal["dropdownlist"] = "dropdownlist"
 
     class Config:
@@ -207,7 +207,7 @@ class MinRadius(Config):
     """
     name: Literal["MinRadius"] = "MinRadius"
     value: Union[MinRadius1, MinRadius2,MinRadius3]
-    type: Literal["option"] = "option"
+    type: Literal["object"] = "object"
     field: Literal["dropdownlist"] = "dropdownlist"
 
     class Config:
