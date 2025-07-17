@@ -25,8 +25,10 @@ class CatOrDog(Component):
         self.request.model = PackageModel(**(self.request.data))
 
         self.image = self.request.get_param("inputImage")
+        print("image:",self.image)
 
         self.model = bootstrap["model"]
+
 
 
     @staticmethod
@@ -36,49 +38,34 @@ class CatOrDog(Component):
 
     def predict_and_annotate(img, model, image_size=(224, 224)):
         """
-        Verilen model ve görsel üzerinde tahmin yapar, sonucu sol üst köşeye yazar ve resmi döndürür.
-
-        Args:
-            img: NumPy array formatında (BGR veya RGB) bir görüntü.
-            model: Eğitilmiş TensorFlow/Keras modeli.
-            image_size: Modele giriş için yeniden boyutlandırılacak hedef boyut.
-
-        Returns:
-            Annotated image (girdi ile aynı formatta, yazı yazılmış haliyle).
+        Görsel üzerinde tahmin yapar, sonucu sol üst köşeye yazar ve resmi döndürür.
         """
-        if img is None:
-            raise ValueError("Geçersiz görüntü: img NoneType.")
 
-        # Orijinal görüntüyü kopyala
-        annotated_img = img.copy()
+        if img is None or not isinstance(img, np.ndarray):
+            raise ValueError("Geçersiz img: NoneType veya numpy array değil.")
 
-        # RGB'ye çevir (model genelde RGB bekler)
-        if len(img.shape) == 3 and img.shape[2] == 3:
-            rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        else:
-            raise ValueError("Görselin 3 kanallı (BGR) olduğundan emin olun.")
-
-        # Görseli yeniden boyutlandır ve normalize et
-        resized = cv2.resize(rgb_img, image_size)
+        resized = cv2.resize(img, image_size)
         img_array = resized.astype(np.float32) / 255.0
-        img_array = np.expand_dims(img_array, axis=0)  # Shape: (1, H, W, 3)
+        img_array = np.expand_dims(img_array, axis=0)
 
-        # Model ile tahmin yap
         prediction = model.predict(img_array)[0][0]
         label = "Köpek" if prediction > 0.5 else "Kedi"
         confidence = prediction if prediction > 0.5 else 1 - prediction
-        text = f"Tahmin: {label} ({confidence:.2f})"
+        text = f"{label} ({confidence:.2f})"
 
-        # Üzerine yazı yaz
-        font = cv2.FONT_HERSHEY_SIMPLEX
-        font_scale = 0.7
         color = (0, 255, 0) if label == "Köpek" else (255, 0, 0)
-        thickness = 2
-        position = (10, 30)
+        cv2.putText(
+            img,
+            text,
+            (10, 30),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.7,
+            color,
+            2,
+            cv2.LINE_AA
+        )
 
-        cv2.putText(annotated_img, text, position, font, font_scale, color, thickness, cv2.LINE_AA)
-
-        return annotated_img
+        return img
 
 
 
