@@ -227,14 +227,17 @@ class MaxRadius(Config):
         title = "Max Radius"
 
 
-class TRUEE(Config):
-    name: Literal["TRUEE"] = "TRUEE"
-    value: Literal["TRUEE"] = "TRUEE"
-    type: Literal["string"] = "string"
-    field: Literal["option"] = "option"
-
+class Alpha(Config):
+    """
+        It changes the contrast of the image. 0<alpha<1 decreases the contrast while 1<alpha<3 increases the contrast.
+    """
+    name: Literal["Alpha"] = "Alpha"
+    value: float = Field(ge=0.0, le=3.0, default=1)
+    type: Literal["number"] = "number"
+    field: Literal["textInput"] = "textInput"
+    placeHolder: Literal["[0,3]"] = "[0,3]"
     class Config:
-        title = "TRUEE"
+        title = "Alpha"
 
 
 
@@ -255,7 +258,7 @@ class MScaleExecutorInputs(Inputs):
 
 
 class CatOrDogConfigs(Configs):
-    truee:TRUEE
+    alpha: Alpha
 
 class HoughCircleExecutorConfigs(Configs):
 
