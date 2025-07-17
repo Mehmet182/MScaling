@@ -341,7 +341,7 @@ class CatOrDog(Config):
     field: Literal["option"] = "option"
 
     class Config:
-        title = "HoughCircle"
+        title = "CatOrDog"
         json_schema_extra = {
             "target": {
                 "value": 0
