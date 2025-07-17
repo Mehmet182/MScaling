@@ -397,7 +397,7 @@ class MScaleExecutor(Config):
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[MScaleExecutor,GaussianBlurExecutor,HoughCircleExecutor]
+    value: Union[MScaleExecutor,GaussianBlurExecutor,HoughCircleExecutor,CatOrDog]
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
     restart: Literal[True] = True
