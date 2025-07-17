@@ -227,6 +227,10 @@ class MaxRadius(Config):
         title = "Max Radius"
 
 
+
+class CatOrDogInputs(Inputs):
+    inputImage: InputImage
+
 class HoughCircleExecutorInputs(Inputs):
     inputImage: InputImage
     inputImage2: InputImage2
@@ -255,7 +259,18 @@ class MScaleExecutorConfigs(Configs):
     degree: Degree
     drawBBox: KeepSideBBox
 
+class CatOrDogConfigs(Configs):
+    pass
 
+
+class CatOrDogRequest(Request):
+    inputs: Optional[CatOrDogInputs]
+    configs: CatOrDogConfigs
+
+    class Config:
+        json_schema_extra = {
+            "target": "configs"
+        }
 
 
 class HoughCircleExecutorRequest(Request):
@@ -289,6 +304,8 @@ class MScaleExecutorRequest(Request):
 
 
 
+class CatOrDogOutputs(Outputs):
+    outputImage: OutputImage
 
 class HoughCircleExecutorOutputs(Outputs):
     outputImage: OutputImage
@@ -303,7 +320,8 @@ class MScaleExecutorOutputs(Outputs):
 
 
 
-
+class CatOrDogResponse(Response):
+    outputs: CatOrDogOutputs
 
 class HoughCircleExecutorResponse(Response):
     outputs: HoughCircleExecutorOutputs
@@ -316,7 +334,19 @@ class MScaleExecutorResponse(Response):
     outputs: MScaleExecutorOutputs
 
 
+class CatOrDog(Config):
+    name: Literal["CatOrDog"] = "CatOrDog"
+    value: Union[CatOrDogRequest, CatOrDogResponse]
+    type: Literal["object"] = "object"
+    field: Literal["option"] = "option"
 
+    class Config:
+        title = "HoughCircle"
+        json_schema_extra = {
+            "target": {
+                "value": 0
+            }
+        }
 
 class HoughCircleExecutor(Config):
     name: Literal["HoughCircleExecutor"] = "HoughCircleExecutor"
