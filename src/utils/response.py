@@ -44,7 +44,7 @@ def build_response_Blur(context):
 
 def build_response_Circle(context):
     outputImage = OutputImage(value=context.image)
-    outputImageA = OutputImageA(value=context.image)
+    outputImageA = OutputImageA(value=context.image2)
 
     houghCircleExecutorOutputs = HoughCircleExecutorOutputs(outputImage=outputImage,outputImageA=outputImageA)
 
