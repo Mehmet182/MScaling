@@ -2,7 +2,7 @@ import os
 import sys
 import tensorflow as tf
 
-Model_Path ='/opt/project/storage/models/mymodel.h5'
+Model_Path ='F8877E/storage/models/mymodel.h5'
 
 
 def load_models(config):
