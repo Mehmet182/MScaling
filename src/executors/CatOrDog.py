@@ -30,9 +30,9 @@ class CatOrDog(Component):
 
 
     @staticmethod
-    def bootstrap(config: dict) -> dict:
-        model=load_models(config=config)
-        return model
+    def bootstrap(config):
+        model = load_models(config)
+        return {"model": model}
 
     def predict_traffic_sign(img):
         return img
