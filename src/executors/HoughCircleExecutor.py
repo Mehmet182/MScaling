@@ -99,15 +99,9 @@ class HoughCircleExecutor(Component):
         img2 = Image.get_frame(img=self.image2, redis_db=self.redis_db)
 
 
-        img_circle = self.huffeman_circle_detection(img.value)
+        img.value = self.huffeman_circle_detection(img.value)
 
-        img_combined = self.combine_images_side_by_side(img, img_circle)
-
-        img_combined2 = self.combine_images_side_by_side(img, img2)
-
-        img.value = self.combine_images_side_by_side(img.value, img_combined)
-
-        img2.value = self.combine_images_side_by_side(img.value, img_combined2)
+        img2.value = self.huffeman_circle_detection(img2.value)
 
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
 
