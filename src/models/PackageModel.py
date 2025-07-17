@@ -227,6 +227,16 @@ class MaxRadius(Config):
         title = "Max Radius"
 
 
+class TRUEE(Config):
+    name: Literal["TRUEE"] = "TRUEE"
+    value: Literal["TRUEE"] = "TRUEE"
+    type: Literal["string"] = "string"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "TRUEE"
+
+
 
 class CatOrDogInputs(Inputs):
     inputImage: InputImage
@@ -244,7 +254,8 @@ class MScaleExecutorInputs(Inputs):
     inputImage: InputImage
 
 
-
+class CatOrDogConfigs(Configs):
+    truee:TRUEE
 
 class HoughCircleExecutorConfigs(Configs):
 
@@ -259,8 +270,6 @@ class MScaleExecutorConfigs(Configs):
     degree: Degree
     drawBBox: KeepSideBBox
 
-class CatOrDogConfigs(Configs):
-    pass
 
 
 class CatOrDogRequest(Request):
