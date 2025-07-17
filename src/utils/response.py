@@ -46,7 +46,7 @@ def build_response_Circle(context):
     outputImage = OutputImage(value=context.image)
     outputImageA = OutputImageA(value=context.image)
 
-    houghCircleExecutorOutputs = HoughCircleExecutorOutputs(outputImage=outputImage,outputImage2=outputImageA)
+    houghCircleExecutorOutputs = HoughCircleExecutorOutputs(outputImage=outputImage,outputImageA=outputImageA)
 
     houghCircleExecutorResponse = HoughCircleExecutorResponse(outputs=houghCircleExecutorOutputs)
 

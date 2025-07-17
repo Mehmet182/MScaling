@@ -67,7 +67,7 @@ class OutputImageA(Output):
             return "list"
 
     class Config:
-        title = "Image"
+        title = "ImageA"
 
 
 

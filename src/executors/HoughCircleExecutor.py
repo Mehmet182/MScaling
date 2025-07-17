@@ -49,21 +49,28 @@ class HoughCircleExecutor(Component):
 
         print("self.min_radius:",self.min_radius)
 
-    def huffeman_circle_detection(self,img):
+    def huffeman_circle_detection(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        print("gray:",gray)
+        print("gray:", gray)
         gray = cv2.GaussianBlur(gray, (9, 9), 2, 2)
-        print("gray2:",gray.shape)
+        print("gray2:", gray.shape)
         gray = gray.astype(np.uint8)
-        circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, dp=1, minDist=10,
-                                  param1=100, param2=50,
-                                  minRadius=20, maxRadius=100)
 
-        for c in circles[0, :]:
-            print(c)
-            cx, cy, r = c
-            cv2.circle(img, (int(cx), int(cy)), 2,(0, 255, 0), 2, 8, 0)
-            cv2.circle(img, (int(cx), int(cy)), int(r),(0, 0, 255), 2, 8, 0)
+        circles = cv2.HoughCircles(
+            gray, cv2.HOUGH_GRADIENT, dp=1, minDist=10,
+            param1=100, param2=50,
+            minRadius=20, maxRadius=100
+        )
+
+        if circles is not None:
+            circles = np.round(circles[0, :]).astype("int")
+            for c in circles:
+                print(c)
+                cx, cy, r = c
+                cv2.circle(img, (cx, cy), 2, (0, 255, 0), 2, 8, 0)
+                cv2.circle(img, (cx, cy), r, (0, 0, 255), 2, 8, 0)
+        else:
+            print("Daire bulunamadı.")
 
         return img
 
