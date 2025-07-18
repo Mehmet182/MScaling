@@ -284,8 +284,8 @@ class MScaleExecutorConfigs(Configs):
 
 
 class TrafficSignRequest(Request):
-    inputs: Optional[TraficSignInputs]
-    configs: TraficSignConfigs
+    inputs: Optional[TrafficSignInputs]
+    configs: TrafficSignConfigs
 
     class Config:
         json_schema_extra = {
