@@ -37,7 +37,15 @@ class TrafficSign(Component):
         model = load_modelstwo(config=config)
         return {"model":model}
 
-    def Put(self,img,text):
+    def Put(self,img):
+
+        if self.show == "ShowText":
+            self.show="Merhaba"
+        else:
+            self.show="100"
+
+        text =self.show
+
         h,w,_ = img.shape
         color = (0, 255, 0)
         cv2.putText(
@@ -51,6 +59,7 @@ class TrafficSign(Component):
             cv2.LINE_AA
         )
 
+        return img
 
     def predict_and_annotate(self,img):
         """
