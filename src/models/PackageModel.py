@@ -230,7 +230,7 @@ class ShowNumber(Config):
     name: Literal["ShowNumber"] = "ShowNumber"
     value: Literal["ShowNumber"] = "ShowNumber"
     type: Literal["number"] = "number"
-    field: Literal["option"] = "option"
+    field: Literal["textInput"] = "textInput"
 
     class Config:
         title = "ShowNumber"
@@ -240,7 +240,7 @@ class ShowText(Config):
     name: Literal["ShowText"] = "ShowText"
     value: Literal["ShowText"] = "ShowText"
     type: Literal["string"] = "string"
-    field: Literal["option"] = "option"
+    field: Literal["textInput"] = "textInput"
 
     class Config:
         title = "ShowText"
