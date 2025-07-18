@@ -226,18 +226,33 @@ class MaxRadius(Config):
     class Config:
         title = "Max Radius"
 
-
-class Alpha(Config):
-    """
-        It changes the contrast of the image. 0<alpha<1 decreases the contrast while 1<alpha<3 increases the contrast.
-    """
-    name: Literal["Alpha"] = "Alpha"
-    value: float = Field(ge=0.0, le=3.0, default=1)
+class ShowNumber(Config):
+    name: Literal["ShowNumber"] = "ShowNumber"
+    value: Literal["ShowNumber"] = "ShowNumber"
     type: Literal["number"] = "number"
-    field: Literal["textInput"] = "textInput"
-    placeHolder: Literal["[0,3]"] = "[0,3]"
+    field: Literal["option"] = "option"
+
     class Config:
-        title = "Alpha"
+        title = "ShowNumber"
+
+
+class ShowText(Config):
+    name: Literal["ShowText"] = "ShowText"
+    value: Literal["ShowText"] = "ShowText"
+    type: Literal["string"] = "string"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "ShowText"
+
+class Show(Config):
+    name: Literal["Show"] = "Show"
+    value: Union[ShowText,ShowNumber]
+    type: Literal["object"] = "object"
+    field: Literal["dropdownlist"] = "dropdownlist"
+
+    class Config:
+        title = "Head"
 
 
 
@@ -262,11 +277,11 @@ class MScaleExecutorInputs(Inputs):
 
 
 class TrafficSignConfigs(Configs):
-    alpha: Alpha
+    show:Show
 
 
 class CatOrDogConfigs(Configs):
-    alpha: Alpha
+    show: Show
 
 class HoughCircleExecutorConfigs(Configs):
 

@@ -26,7 +26,7 @@ class TrafficSign(Component):
 
         self.image = self.request.get_param("inputImage")
         #print("image:",self.image)
-
+        self.show = self.request.get_param("Show")
         self.model = bootstrap["model"]
         print("model:",self.model)
 
@@ -36,6 +36,20 @@ class TrafficSign(Component):
     def bootstrap(config: dict) -> dict:
         model = load_modelstwo(config=config)
         return {"model":model}
+
+    def Put(self,img,text):
+        h,w,_ = img.shape
+        color = (0, 255, 0)
+        cv2.putText(
+            img,
+            text,
+            (h-10, w-30),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.7,
+            color,
+            2,
+            cv2.LINE_AA
+        )
 
 
     def predict_and_annotate(self,img):
@@ -101,6 +115,7 @@ class TrafficSign(Component):
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
         img.value = self.predict_and_annotate(img.value)
+        img.value = self.Put(img.value, self.show)
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
         packageModel = build_response_TraficSign(context=self)
         return packageModel
