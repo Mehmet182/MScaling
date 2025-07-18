@@ -227,65 +227,20 @@ class MaxRadius(Config):
         title = "Max Radius"
 
 
-class ShowBothPush(Config):
-    """
-            Tespit edilecek maksimum daire yarıçapı
-    """
-    name: Literal["ShowBothPush"] = "ShowBothPush"
-    value:int
-    type: Literal["number"] = "number"
-    field: Literal["textInput"] = "textInput"
-
-    class Config:
-        title = "ShowNumberPush"
-
-
-class ShowBoth(Config):
-    name: Literal["ShowBoth"] = "ShowBoth"
-    value: Union[ShowBothPush]
-    type: Literal["object"] = "object"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "ShowText"
-
-
-class ShowNumberPush(Config):
-    """
-            Tespit edilecek maksimum daire yarıçapı
-    """
-    name: Literal["ShowNumberPush"] = "ShowNumberPush"
-    value:int
-    type: Literal["number"] = "number"
-    field: Literal["textInput"] = "textInput"
-
-    class Config:
-        title = "ShowNumberPush"
-
-
 class ShowNumber(Config):
     name: Literal["ShowNumber"] = "ShowNumber"
-    value: Union[ShowNumberPush]
-    type: Literal["object"] = "object"
+    value: Literal["ShowNumber"] = "ShowNumber"
+    type: Literal["bool"] = "bool"
     field: Literal["option"] = "option"
 
     class Config:
         title = "ShowNumber"
 
 
-class ShowTextPush(Config):
-    name: Literal["ShowTextPush"] = "ShowTextPush"
-    value:str
-    type: Literal["string"] = "string"
-    field: Literal["textInput"] = "textInput"
-
-    class Config:
-        title = "ShowTextPush"
-
 class ShowText(Config):
     name: Literal["ShowText"] = "ShowText"
-    value: Union[ShowTextPush]
-    type: Literal["object"] = "object"
+    value:Literal["ShowText"] = "ShowText"
+    type: Literal["bool"] = "bool"
     field: Literal["option"] = "option"
 
     class Config:
@@ -294,7 +249,7 @@ class ShowText(Config):
 
 class Show(Config):
     name: Literal["Show"] = "Show"
-    value: Union[ShowText,ShowNumber,ShowBoth]
+    value: Union[ShowText,ShowNumber]
     type: Literal["object"] = "object"
     field: Literal["dropdownlist"] = "dropdownlist"
 
