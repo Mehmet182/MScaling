@@ -5,6 +5,7 @@ import cv2
 import os
 import sys
 import numpy as np
+import tensorflow as tf
 
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../'))
@@ -42,9 +43,13 @@ class TrafficSign(Component):
         Görsel üzerinde tahmin yapar, sonucu sol üst köşeye yazar ve resmi döndürür.
         """
 
-        from tensorflow.keras.preprocessing import image
-        from PIL import Image
+        import numpy as np
         import tensorflow as tf
+        from tensorflow.keras.models import load_model
+        from PIL import Image
+
+
+
         classes = {
             1: 'Speed limit (20km/h)', 2: 'Speed limit (30km/h)', 3: 'Speed limit (50km/h)',
             4: 'Speed limit (60km/h)', 5: 'Speed limit (70km/h)', 6: 'Speed limit (80km/h)',
@@ -60,11 +65,13 @@ class TrafficSign(Component):
             40: 'Keep left', 41: 'Roundabout mandatory', 42: 'End of no passing', 43: 'End no passing veh > 3.5 tons'
         }
 
-        pil_image = Image.fromarray(img)
-        resized_image = pil_image.resize((30, 30))
-        input_tensor = np.expand_dims(resized_image, axis=0)  # shape
 
-        predictions = self.model.predict(input_tensor)
+        image = img.resize((30, 30))
+        image = np.array(image)
+
+        image = np.expand_dims(image, axis=0)
+
+        predictions = self.model.predict(image)
         predicted_class = np.argmax(predictions) + 1
         confidence = np.max(predictions)
 
