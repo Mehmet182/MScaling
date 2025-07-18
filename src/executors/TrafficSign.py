@@ -46,12 +46,18 @@ class TrafficSign(Component):
 
         text =self.show
 
-        h,w,_ = img.shape
+        (text_width, text_height), _ = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)
+
+        h,w,_ = img.shape[2]
+
+        h=w - text_width - 10
+        w = 30
+
         color = (0, 255, 0)
         cv2.putText(
             img,
             text,
-            (h-10, w-30),
+            (h, w),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.7,
             color,
