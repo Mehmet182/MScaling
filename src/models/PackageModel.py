@@ -1,6 +1,6 @@
 from pydantic import Field, validator
 from typing import List, Optional, Union, Literal
-from sdks.novavision.src.base.model import Package, Image, Inputs, Configs, Outputs, Response, Request, Output, Input, Config
+from sdks.novavision.src.base.model import Detection, Package, Image, Inputs, Configs, Outputs, Response, Request, Output, Input, Config
 
 
 class InputImage(Input):
@@ -69,7 +69,16 @@ class OutputImageA(Output):
     class Config:
         title = "ImageA"
 
+class Detection(Detection):
+    imgUID: str
 
+class OutputDetections(Output):
+    name: Literal["outputDetections"] = "outputDetections"
+    value: List[Detection]
+    type: Literal["list"] = "list"
+
+    class Config:
+        title = "Detections"
 
 
 
@@ -258,6 +267,7 @@ class Show(Config):
 
 
 
+
 class TrafficSignInputs(Inputs):
     inputImage: InputImage
 
@@ -356,6 +366,7 @@ class TrafficSignOutputs(Outputs):
 
 class CatOrDogOutputs(Outputs):
     outputImage: OutputImage
+    outputDetections: OutputDetections
 
 class HoughCircleExecutorOutputs(Outputs):
     outputImage: OutputImage

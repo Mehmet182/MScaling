@@ -3,7 +3,7 @@ from sdks.novavision.src.helper.package import PackageHelper
 from components.MScaling.src.models.PackageModel import PackageModel, PackageConfigs, ConfigExecutor, MScaleExecutorOutputs, MScaleExecutorResponse, MScaleExecutor, OutputImage
 from components.MScaling.src.models.PackageModel import HoughCircleExecutorOutputs,HoughCircleExecutorResponse ,HoughCircleExecutor,OutputImageA
 from components.MScaling.src.models.PackageModel import GaussianBlurExecutorOutputs , GaussianBlurExecutorResponse,GaussianBlurExecutor
-from components.MScaling.src.models.PackageModel import CatOrDogOutputs , CatOrDogResponse,CatOrDog
+from components.MScaling.src.models.PackageModel import CatOrDogOutputs , CatOrDogResponse,CatOrDog,OutputDetections
 from components.MScaling.src.models.PackageModel import TrafficSignOutputs , TrafficSignResponse,TrafficSign
 
 
@@ -65,8 +65,9 @@ def build_response_Circle(context):
 
 def build_response_CatOrDog(context):
     outputImage = OutputImage(value=context.image)
+    outputDetections = OutputDetections(value=context.detection)
 
-    catOrDogOutputs = CatOrDogOutputs(outputImage=outputImage)
+    catOrDogOutputs = CatOrDogOutputs(outputImage=outputImage,OutputDetections=outputDetections)
 
     catOrDogResponse = CatOrDogResponse(outputs=catOrDogOutputs)
 
