@@ -229,7 +229,7 @@ class MaxRadius(Config):
 class ShowNumber(Config):
     name: Literal["ShowNumber"] = "ShowNumber"
     value: int
-    type: Literal["number"] = "number"
+    type: Literal["bool"] = "bool"
     field: Literal["option"] = "option"
 
     class Config:
@@ -239,7 +239,7 @@ class ShowNumber(Config):
 class ShowText(Config):
     name: Literal["ShowText"] = "ShowText"
     value: Literal["ShowText"] = "ShowText"
-    type: Literal["string"] = "string"
+    type: Literal["bool"] = "bool"
     field: Literal["option"] = "option"
 
     class Config:
@@ -279,7 +279,6 @@ class MScaleExecutorInputs(Inputs):
 
 class TrafficSignConfigs(Configs):
     show: Show
-
 
 class CatOrDogConfigs(Configs):
     show: Show
