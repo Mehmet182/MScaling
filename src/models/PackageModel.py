@@ -243,7 +243,7 @@ class ShowNumberPush(Config):
 class ShowNumber(Config):
     name: Literal["ShowNumber"] = "ShowNumber"
     value: Union[ShowNumberPush]
-    type: Literal["bool"] = "bool"
+    type: Literal["object"] = "object"
     field: Literal["option"] = "option"
 
     class Config:
@@ -262,7 +262,7 @@ class ShowTextPush(Config):
 class ShowText(Config):
     name: Literal["ShowText"] = "ShowText"
     value: Union[ShowTextPush]
-    type: Literal["bool"] = "bool"
+    type: Literal["object"] = "object"
     field: Literal["option"] = "option"
 
     class Config:
