@@ -65,10 +65,15 @@ class TrafficSign(Component):
             40: 'Keep left', 41: 'Roundabout mandatory', 42: 'End of no passing', 43: 'End no passing veh > 3.5 tons'
         }
 
+        if isinstance(img, np.ndarray):
+            # Float tipindeyse uint8'e çevir ve PIL image oluştur
+            img_uint8 = img.astype(np.uint8)
+            pil_image = Image.fromarray(img_uint8)
+        else:
+            raise ValueError("Giriş sadece NumPy array (img) olmalı")
 
-        image = img.resize((30, 30))
-        image = np.array(image)
-
+        image = pil_image.resize((30, 30))
+        #image = np.array(image).astype(np.float32) / 255.0
         image = np.expand_dims(image, axis=0)
 
         predictions = self.model.predict(image)
