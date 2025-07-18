@@ -230,7 +230,7 @@ class ShowNumber(Config):
     name: Literal["ShowNumber"] = "ShowNumber"
     value: int
     type: Literal["number"] = "number"
-    field: Literal["textInput"] = "textInput"
+    field: Literal["option"] = "option"
 
     class Config:
         title = "ShowNumber"
@@ -240,7 +240,7 @@ class ShowText(Config):
     name: Literal["ShowText"] = "ShowText"
     value: Literal["ShowText"] = "ShowText"
     type: Literal["string"] = "string"
-    field: Literal["textInput"] = "textInput"
+    field: Literal["option"] = "option"
 
     class Config:
         title = "ShowText"
@@ -278,7 +278,7 @@ class MScaleExecutorInputs(Inputs):
 
 
 class TrafficSignConfigs(Configs):
-    show:Show
+    show: Show
 
 
 class CatOrDogConfigs(Configs):
