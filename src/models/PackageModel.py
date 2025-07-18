@@ -245,6 +245,7 @@ class ShowText(Config):
     class Config:
         title = "ShowText"
 
+
 class Show(Config):
     name: Literal["Show"] = "Show"
     value: Union[ShowText,ShowNumber]
