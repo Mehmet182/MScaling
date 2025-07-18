@@ -228,7 +228,7 @@ class MaxRadius(Config):
 
 class ShowNumber(Config):
     name: Literal["ShowNumber"] = "ShowNumber"
-    value: int
+    value: Literal["ShowNumber"] = "ShowNumber"
     type: Literal["bool"] = "bool"
     field: Literal["option"] = "option"
 
