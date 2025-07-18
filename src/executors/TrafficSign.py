@@ -17,7 +17,7 @@ from components.MScaling.src.models.PackageModel import PackageModel
 from components.MScaling.src.utils.utils import load_modelstwo
 
 
-class CatOrDog(Component):
+class TrafficSign(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         #print(self.request.data)
