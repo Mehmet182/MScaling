@@ -227,6 +227,29 @@ class MaxRadius(Config):
         title = "Max Radius"
 
 
+class ShowBothPush(Config):
+    """
+            Tespit edilecek maksimum daire yarıçapı
+    """
+    name: Literal["ShowBothPush"] = "ShowBothPush"
+    value:int
+    type: Literal["number"] = "number"
+    field: Literal["textInput"] = "textInput"
+
+    class Config:
+        title = "ShowNumberPush"
+
+
+class ShowBoth(Config):
+    name: Literal["ShowBoth"] = "ShowBoth"
+    value: Union[ShowBothPush]
+    type: Literal["object"] = "object"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "ShowText"
+
+
 class ShowNumberPush(Config):
     """
             Tespit edilecek maksimum daire yarıçapı
@@ -271,7 +294,7 @@ class ShowText(Config):
 
 class Show(Config):
     name: Literal["Show"] = "Show"
-    value: Union[ShowText,ShowNumber]
+    value: Union[ShowText,ShowNumber,ShowBoth]
     type: Literal["object"] = "object"
     field: Literal["dropdownlist"] = "dropdownlist"
 
