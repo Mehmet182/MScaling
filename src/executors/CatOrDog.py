@@ -47,19 +47,20 @@ class CatOrDog(Component):
 
         img_resized = cv2.resize(img, (224, 224))
         img_array = image.img_to_array(img_resized) // 255.0
-        img_array = tf.expand_dims(img_array, 0)  # (1, 224, 224, 3)
+        img_array = tf.expand_dims(img_array, 0)
 
         prediction = self.model.predict(img_array)[0][0]
-        """
-        if prediction > 0.5:
-            print("Tahmin: Köpek (%0.2f)" % prediction)
-        else:
-            print("Tahmin: Kedi (%0.2f)" % (1 - prediction))
-        
-        """
 
-        label = "Köpek" if prediction > 0.5 else "Kedi"
-        confidence = prediction if prediction > 0.5 else 1 - prediction
+        if prediction > 0.5:
+            #print("Tahmin: Köpek (%0.2f)" % prediction)
+            label = "Köpek"
+            confidence =prediction
+
+        else:
+            # print("Tahmin: Kedi (%0.2f)" % (1 - prediction))
+            label = "Kedi"
+            confidence = (1 - prediction)
+
         text = f"{label} ({confidence:.2f})"
 
         color = (0, 255, 0) if label == "Köpek" else (255, 0, 0)

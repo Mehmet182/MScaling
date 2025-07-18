@@ -4,6 +4,7 @@ from components.MScaling.src.models.PackageModel import PackageModel, PackageCon
 from components.MScaling.src.models.PackageModel import HoughCircleExecutorOutputs,HoughCircleExecutorResponse ,HoughCircleExecutor,OutputImageA
 from components.MScaling.src.models.PackageModel import GaussianBlurExecutorOutputs , GaussianBlurExecutorResponse,GaussianBlurExecutor
 from components.MScaling.src.models.PackageModel import CatOrDogOutputs , CatOrDogResponse,CatOrDog
+from components.MScaling.src.models.PackageModel import TrafficSignOutputs , TrafficSignResponse,TrafficSign
 
 
 
@@ -72,6 +73,23 @@ def build_response_CatOrDog(context):
     catOrDog = CatOrDog(value=catOrDogResponse)
 
     executor = ConfigExecutor(value=catOrDog)
+    packageConfigs = PackageConfigs(executor=executor)
+    package = PackageHelper(packageModel=PackageModel, packageConfigs=packageConfigs)
+    packageModel = package.build_model(context)
+    return packageModel
+
+
+
+def build_response_TraficSign(context):
+    outputImage = OutputImage(value=context.image)
+
+    trafficSignOutputs = TrafficSignOutputs(outputImage=outputImage)
+
+    trafficSignResponse = TrafficSignResponse(outputs=trafficSignOutputs)
+
+    trafficSign = TrafficSign(value=trafficSignResponse)
+
+    executor = ConfigExecutor(value=trafficSign)
     packageConfigs = PackageConfigs(executor=executor)
     package = PackageHelper(packageModel=PackageModel, packageConfigs=packageConfigs)
     packageModel = package.build_model(context)

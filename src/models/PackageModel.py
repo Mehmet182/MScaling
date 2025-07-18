@@ -241,6 +241,9 @@ class Alpha(Config):
 
 
 
+class TrafficSignInputs(Inputs):
+    inputImage: InputImage
+
 class CatOrDogInputs(Inputs):
     inputImage: InputImage
 
@@ -255,6 +258,11 @@ class GaussianBlurExecutorInputs(Inputs):
 
 class MScaleExecutorInputs(Inputs):
     inputImage: InputImage
+
+
+
+class TrafficSignConfigs(Configs):
+    pass
 
 
 class CatOrDogConfigs(Configs):
@@ -273,6 +281,16 @@ class MScaleExecutorConfigs(Configs):
     degree: Degree
     drawBBox: KeepSideBBox
 
+
+
+class TrafficSignRequest(Request):
+    inputs: Optional[TraficSignInputs]
+    configs: TraficSignConfigs
+
+    class Config:
+        json_schema_extra = {
+            "target": "configs"
+        }
 
 
 class CatOrDogRequest(Request):
@@ -316,6 +334,10 @@ class MScaleExecutorRequest(Request):
 
 
 
+
+class TrafficSignOutputs(Outputs):
+    outputImage: OutputImage
+
 class CatOrDogOutputs(Outputs):
     outputImage: OutputImage
 
@@ -332,6 +354,10 @@ class MScaleExecutorOutputs(Outputs):
 
 
 
+
+class TrafficSignResponse(Response):
+    outputs: TrafficSignOutputs
+
 class CatOrDogResponse(Response):
     outputs: CatOrDogOutputs
 
@@ -344,6 +370,22 @@ class GaussianBlurExecutorResponse(Response):
 
 class MScaleExecutorResponse(Response):
     outputs: MScaleExecutorOutputs
+
+
+class TrafficSign(Config):
+    name: Literal["TrafficSign"] = "TrafficSign"
+    value: Union[TrafficSignRequest, TrafficSignResponse]
+    type: Literal["object"] = "object"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "CatOrDog"
+        json_schema_extra = {
+            "target": {
+                "value": 0
+            }
+        }
+
 
 
 class CatOrDog(Config):
@@ -409,7 +451,7 @@ class MScaleExecutor(Config):
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[MScaleExecutor,GaussianBlurExecutor,HoughCircleExecutor,CatOrDog]
+    value: Union[MScaleExecutor,GaussianBlurExecutor,HoughCircleExecutor,CatOrDog,TrafficSign]
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
     restart: Literal[True] = True
