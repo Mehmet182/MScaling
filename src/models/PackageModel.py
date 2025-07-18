@@ -379,7 +379,7 @@ class TrafficSign(Config):
     field: Literal["option"] = "option"
 
     class Config:
-        title = "CatOrDog"
+        title = "TrafficSign"
         json_schema_extra = {
             "target": {
                 "value": 0
