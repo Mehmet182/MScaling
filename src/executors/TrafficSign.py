@@ -43,8 +43,8 @@ class TrafficSign(Component):
         """
 
         from tensorflow.keras.preprocessing import image
+        from PIL import Image
         import tensorflow as tf
-
         classes = {
             1: 'Speed limit (20km/h)', 2: 'Speed limit (30km/h)', 3: 'Speed limit (50km/h)',
             4: 'Speed limit (60km/h)', 5: 'Speed limit (70km/h)', 6: 'Speed limit (80km/h)',
@@ -60,18 +60,17 @@ class TrafficSign(Component):
             40: 'Keep left', 41: 'Roundabout mandatory', 42: 'End of no passing', 43: 'End no passing veh > 3.5 tons'
         }
 
-        image = img.resize((30, 30))
-        image = np.array(image)
-        image = np.expand_dims(image, axis=0)
+        pil_image = Image.fromarray(img)
+        resized_image = pil_image.resize((30, 30))
+        input_tensor = np.expand_dims(resized_image, axis=0)  # shape
 
-        predictions = self.model.predict(image)
-
-        predicted_class = np.argmax(predictions) + 1  # En yüksek olasılığa sahip sınıfı al
+        predictions = self.model.predict(input_tensor)
+        predicted_class = np.argmax(predictions) + 1
         confidence = np.max(predictions)
 
         text = f"{classes[predicted_class]} ({confidence:.4f})"
 
-        color = (0, 255, 0) if predicted_class == "Köpek" else (255, 0, 0)
+        color = (0, 255, 0)
         cv2.putText(
             img,
             text,
