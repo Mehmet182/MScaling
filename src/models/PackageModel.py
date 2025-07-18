@@ -262,7 +262,7 @@ class MScaleExecutorInputs(Inputs):
 
 
 class TrafficSignConfigs(Configs):
-    pass
+    alpha: Alpha
 
 
 class CatOrDogConfigs(Configs):
