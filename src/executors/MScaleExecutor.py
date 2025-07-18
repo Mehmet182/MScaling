@@ -28,6 +28,7 @@ class MScaleExecutor(Component):
         print(self.keep_side)
 
         self.image = self.request.get_param("inputImage")
+        print("image:", self.image)
 
     @staticmethod
     def bootstrap(config: dict) -> dict:

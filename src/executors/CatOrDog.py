@@ -5,7 +5,6 @@ import cv2
 import os
 import sys
 import numpy as np
-# from PIL import Image
 
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../'))
@@ -21,34 +20,44 @@ from components.MScaling.src.utils.utils import load_models
 class CatOrDog(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
-        print(self.request.data)
+        #print(self.request.data)
         self.request.model = PackageModel(**(self.request.data))
 
         self.image = self.request.get_param("inputImage")
-        print("image:",self.image)
+        #print("image:",self.image)
 
         self.model = bootstrap["model"]
+        print("model:",self.model)
 
 
 
     @staticmethod
     def bootstrap(config: dict) -> dict:
         model = load_models(config=config)
-        return {"model": model}
+        return {"model":model}
 
-    def predict_and_annotate(img, model, image_size=(224, 224)):
+
+    def predict_and_annotate(self,img):
         """
         Görsel üzerinde tahmin yapar, sonucu sol üst köşeye yazar ve resmi döndürür.
         """
 
-        if img is None or not isinstance(img, np.ndarray):
-            raise ValueError("Geçersiz img: NoneType veya numpy array değil.")
+        from tensorflow.keras.preprocessing import image
+        import tensorflow as tf
 
-        resized = cv2.resize(img, image_size)
-        img_array = resized.astype(np.float32) / 255.0
-        img_array = np.expand_dims(img_array, axis=0)
+        img_resized = cv2.resize(img, (224, 224))
+        img_array = image.img_to_array(img_resized) // 255.0
+        img_array = tf.expand_dims(img_array, 0)  # (1, 224, 224, 3)
 
-        prediction = model.predict(img_array)[0][0]
+        prediction = self.model.predict(img_array)[0][0]
+        """
+        if prediction > 0.5:
+            print("Tahmin: Köpek (%0.2f)" % prediction)
+        else:
+            print("Tahmin: Kedi (%0.2f)" % (1 - prediction))
+        
+        """
+
         label = "Köpek" if prediction > 0.5 else "Kedi"
         confidence = prediction if prediction > 0.5 else 1 - prediction
         text = f"{label} ({confidence:.2f})"
@@ -71,7 +80,7 @@ class CatOrDog(Component):
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        img.value = self.predict_and_annotate(img.value,self.model)
+        img.value = self.predict_and_annotate(img.value)
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
         packageModel = build_response_CatOrDog(context=self)
         return packageModel
